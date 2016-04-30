@@ -1,9 +1,9 @@
 UBERSPACE HOSTING:
 
+```
 UBERSPACE_SERVER_DIR = the directory on uberspace, in which the meteor app should run. Example: "meteor-server/myapp"
-
 UBERSPACE_SERVICENAME = the name of the service/deamon that runs this app. Example: "meteor-server-myapp"
-
+```
 
 ### 0. Open a port
 
