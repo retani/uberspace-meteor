@@ -1,0 +1,59 @@
+#!/bin/bash
+if [ ! -f uberspace.config ]; then
+  echo "Please go to the root directory of the meteor app first, and set up uberspace.config"
+  exit
+fi
+
+source uberspace.config
+
+echo "using following uberspace.config:"
+echo "----------------------"
+cat uberspace.config
+echo "----------------------"
+
+read -p "Continue with above config? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+cd app
+
+echo "Building..."
+meteor build --architecture os.linux.x86_64 ../build
+
+cd ../
+
+echo "Uploading..."
+scp -rCp build $uberspace_username@$uberspace_host:~/tmp/
+
+# continuing remotely:
+echo "Continuing remotely:"
+
+ssh $uberspace_username@$uberspace_host /bin/bash << EOF
+cd ~/tmp/build
+echo "Unpacking..."
+tar -xzf app.tar.gz
+
+echo "Installing node modules..."
+cd ~/tmp/build/bundle/programs/server/
+npm install
+
+echo "Stopping server..."
+svc -d ~/service/$uberspace_servicename
+sleep 1
+
+echo "Replacing live files..."
+rm -r ~/$uberspace_server_dir/*
+cd ~/tmp
+mv build/bundle ~/$uberspace_server_dir/
+
+echo "Starting server..."
+svc -u ~/service/$uberspace_servicename
+
+echo "Cleaning up..."
+cd ~/tmp
+rm -r build
+
+EOF
