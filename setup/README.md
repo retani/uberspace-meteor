@@ -1,4 +1,4 @@
-UBERSPACE HOSTING:
+### Variables used in this manual
 
 ```
 UBERSPACE_SERVER_DIR = the directory on uberspace, in which the meteor app should run. Example: "meteor-server/myapp"
