@@ -84,6 +84,22 @@ db.createUser(
 )
 ```
 
+If you do not plan to intialize your database through an existing dump, you need to add a "dbAdmin" role for your user. This will enable your meteor app to create new collections in the empty dabatase. See https://docs.mongodb.com/manual/reference/built-in-roles/ for details on roles.
+```
+use myapp_prod
+db.createUser(
+    {
+      user: "myapp_prod",
+      pwd: "7hfkBYNPWPMOIDm4",
+      roles: [
+         { role: "readWrite", db: "myapp_prod" },
+         { role: "dbAdmin", db: "myapp_prod" }
+      ]
+    }
+)
+```
+
+
 ### 8. Setup meteor service variables in ~/service/myapp-meteor/run using above ports and mongo credentials
 
 ```
