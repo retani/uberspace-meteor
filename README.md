@@ -1,6 +1,6 @@
-## Setup and deploy a Meteor app to uberspace.de
-
 UPDATE: websockets over SSL is solved here: https://delta.civilian.eu/civilianeu/migma-proxy. This repository is slightly outdated but may receive an update soon.
+
+## Setup and deploy a Meteor app to uberspace.de
 
 This repository contains a manual on how to setup a Meteor app on uberspace and a script to deploy the app. It is very basic and rough at the moment, but I hope it helps. Not many concerns are put in security, and websockets won't work over SSL. Please feel free to improve. 
 
