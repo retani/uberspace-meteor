@@ -1,4 +1,4 @@
-UPDATE: websockets over SSL is solved here: https://delta.civilian.eu/civilianeu/migma-proxy. This repository is slightly outdated but may receive an update soon.
+UPDATE: websockets over SSL is solved here: https://delta.civilian.eu/civilianeu/migma-proxy. This repository is slightly outdated but may receive an update soon. Happy to receive pull requests.
 
 ## Setup and deploy a Meteor app to uberspace.de
 
