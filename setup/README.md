@@ -7,7 +7,7 @@ UBERSPACE_SERVICENAME = the name of the service/deamon that runs this app. Examp
 
 ### 0. Open a port
 
-This will enable you to use websockets (unless you want to use HTTPS)
+This will enable you to use websockets
 ```
 $ uberspace-add-port -p tcp --firewall
 All good! Opened port 64991, tcp protocol(s).
@@ -28,12 +28,19 @@ $ mkdir ~/UBERSPACE_SERVER_DIR
 
 assuming: meteor bundle in ~/UBERSPACE_SERVER_DIR/bundle
 
-### 3. bridge to http server
+### 3. bridge to https server
+
+If you don't want to use HTTPS for whatever reason, just ignore the middle part and use only `RewriteEngine On` and `RewriteRule ^(.*)$ http://localhost:64991/$1 [P]`.
 
 Add to ~/html/.htaccess :
 
 ```
 RewriteEngine On
+
+RewriteCond %{HTTPS} !=on
+RewriteCond %{ENV:HTTPS} !=on
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
 RewriteRule ^(.*)$ http://localhost:64991/$1 [P]
 ```
 
@@ -101,13 +108,18 @@ db.createUser(
 
 
 ### 8. Setup meteor service variables in ~/service/myapp-meteor/run using above ports and mongo credentials
+If you use a custom domain (step 11) you can also use your own domain as `DDP_DEFAULT_CONNECTION_URL` and `ROOT_URL`. Make sure you have a valid HTTPS certificate then. 
+
+It's explained how to get one here for your own domain: https://wiki.uberspace.de/webserver:https .
+
+If you don't want to use HTTPS, just write `http://...`for both URLs. 
 
 ```
 export DISABLE_WEBSOCKETS=1
 #OR
-export DDP_DEFAULT_CONNECTION_URL=http://username.subdomain.uberspace.de:64991/
+export DDP_DEFAULT_CONNECTION_URL=https://username.subdomain.uberspace.de/
 
-export ROOT_URL='http://username.subdomain.uberspace.de/'
+export ROOT_URL='https://username.subdomain.uberspace.de/'
 export PORT=64991
 export MONGO_URL='mongodb://myapp_prod:7hfkBYNPWPMOIDm4@localhost:21040/myapp_prod'
 ```
