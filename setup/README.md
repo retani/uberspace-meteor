@@ -112,7 +112,7 @@ If you use a custom domain (step 11) you can also use your own domain as `DDP_DE
 
 It's explained how to get one here for your own domain: https://wiki.uberspace.de/webserver:https .
 
-If you don't want to use HTTPS, just write `https://...`for both URLs. 
+If you don't want to use HTTPS, just write `http://...`for both URLs. 
 
 ```
 export DISABLE_WEBSOCKETS=1
